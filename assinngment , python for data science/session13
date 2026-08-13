@@ -1,0 +1,77 @@
+#1.  Write a recursive function in Python called print_playlist_songs(songs) that takes a list of song names (like a Spotify playlist) and prints each song name one by one using recursion.
+
+
+def print_playlist_songs(songs):
+    # Base case: if the list is empty, stop recursion
+    if not songs:
+        return
+    
+    # Print the first song in the list
+    print(songs[0])
+    
+    # Recursive call with the rest of the list
+    print_playlist_songs(songs[1:])
+
+
+
+#2.  Create a recursive function count_unread_messages(messages) that takes a nested dictionary representing WhatsApp chat groups and subgroups, and returns the total number of unread messages across all groups.<br><br><em><strong>Hint:</strong> Each group can have a 'count' key for unread messages and a 'subgroups' key with a list of more groups.</em>
+
+def count_unread_messages(messages):
+    # Base case / Current group count: get the count of the current dictionary (default to 0)
+    total = messages.get('count', 0)
+    
+    # Recursive step: iterate through all subgroups and add their counts
+    for subgroup in messages.get('subgroups', []):
+        total += count_unread_messages(subgroup)
+        
+    return total
+
+
+#3.  Given the following code, identify which variables are local and which are global, and explain what will be printed when you call outer() and then print(x) at the end:<br><br>```python
+x = 'global'
+def outer():
+x = 'outer'
+def inner():
+nonlocal x
+x = 'inner'
+inner()
+print('Inside outer:', x)
+outer()
+print('Outside:', x)
+```<br><br><em><strong>Hint:</strong> Focus on the scope of x inside and outside the functions.</em>
+
+
+Variable Identification:
+
+x = 'global' (Line 1): This is a global variable. It exists in the global scope, outside of any functions.
+
+x = 'outer' (Inside outer()): This is a local variable to the outer function (also known as an enclosing variable for inner).
+
+nonlocal x (Inside inner()): This tells Python not to create a new local variable x inside inner(), but rather to bind to the nearest enclosing scope's variable, which is the x from outer().
+
+What will be printed:
+
+Inside outer: inner
+Why: When outer() runs, it assigns 'outer' to its local x. It then calls inner(). Because inner() uses the nonlocal keyword, x = 'inner' overwrites the x belonging to outer(). When outer() prints x, it outputs the updated value.
+
+Outside: global
+Why: The global variable x was never modified. The functions only modified the local/enclosing variables.
+
+#4.  Build a recursive function format_number_short(n) that takes a number (like a follower count on Instagram or YouTube) and returns it as a string in short format: 1500 as '1.5K', 1200000 as '1.2M', 500 as '500'.
+
+
+def format_number_short(n, suffix_idx=0):
+    suffixes = ["", "K", "M", "B", "T"]
+    
+    # Base case: number is less than 1000, or we run out of suffixes
+    if n < 1000 or suffix_idx == len(suffixes) - 1:
+        if suffix_idx == 0:
+            return str(n)
+        
+        # Format to 1 decimal place and remove trailing ".0" if it exists
+        num_str = f"{n:.1f}".replace('.0', '')
+        return f"{num_str}{suffixes[suffix_idx]}"
+    
+    # Recursive step: divide by 1000 and move to the next suffix
+    return format_number_short(n / 1000, suffix_idx + 1)
+
