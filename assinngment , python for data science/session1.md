@@ -1,8 +1,7 @@
 1. Install Anaconda on your system and launch Jupyter Notebook from the Anaconda Navigator.
 
 
-
-![alt text](image-1.png)
+![alt text](image.png)
 
 2. Create a new Jupyter Notebook file named insta_intro.ipynb and write a cell that prints your name and your favorite app (like Instagram or Zomato) using the print() function.
 
